@@ -23,4 +23,14 @@ feature "check lists" do
   scenario 'number of successful charges' do
   	Charge.successful.count == 13
   end
+
+  # scenario 'new charge', js: true do
+  # 	visit new_charge_path
+  # 	fill_in "charge_amount", :with => 12
+  #   # find(:xpath, "//input[@id='charge_amount']").set "12"
+  # 	# # select "Company_A", :from => "chargeables"
+  # 	# find(:select, "chargeables").find(:option, "3_user").select_option
+  # 	# click_button "Create Charge"
+  #   # expect(page).to have_content('Charge was successfully created.')
+  # end
 end
