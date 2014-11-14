@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @chargeable.name %>
+</p>
+
+<% if @chargeable.try(:zip_code).present? %>
+	<p>
+	  <strong>Zipcode:</strong>
+	  <%= @chargeable.zip_code %>
+	</p>
+<% end %>
+
+<p>
+  <strong>Amount:</strong>
+  <%= number_to_currency @charge.amount %>
+</p>
+
+<p>
+  <strong>Unique code:</strong>
+  <%= @charge.unique_code %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @charge.status %>
+</p>
+
+<%#= link_to 'Edit', edit_charge_path(@charge) %> |
+<%= link_to 'Back', charges_path %>

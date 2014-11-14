@@ -1,0 +1,24 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  host: localhost
+  port: 5432
+  database: erc_development
+  username: postgres
+  password: postgres
+
+
+test:
+  <<: *default
+  database: erc_test
+
+production:
+  <<: *default
+  database: erc_production
+  username: testapp
+  password: <%= ENV['TESTAPP_DATABASE_PASSWORD'] %>
