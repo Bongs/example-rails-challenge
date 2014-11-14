@@ -1,5 +1,4 @@
 class ChargesController < ApplicationController
-  # before_action :set_resources
   before_action :set_charge, only: [:show, :edit, :update, :destroy]
 
   # GET /charges
@@ -29,11 +28,13 @@ class ChargesController < ApplicationController
   # POST /charges
   # POST /charges.json
   def create
-    @charge = Charge.new(charge_params)
+    # @charge = Charge.new(charge_params)
+    chargeable = charge_params[:c_type].classify.constantize.find(charge_params[:c_id])
+    @charge = chargeable.charges.new({amount: charge_params[:amount], paid: true, refunded: false})
 
     respond_to do |format|
       if @charge.save
-        format.html { redirect_to @charge, notice: 'Charge was successfully created.' }
+        format.html { redirect_to charge_path(@charge.unique_code), notice: 'Charge was successfully created.' }
         format.json { render :show, status: :created, location: @charge }
       else
         format.html { render :new }
@@ -67,9 +68,6 @@ class ChargesController < ApplicationController
   end
 
   private
-    # def set_resources
-    #   @chargeable = find_chargeable
-    # end
     # Use callbacks to share common setup or constraints between actions.
     def set_charge
       @charge = Charge.find_by_unique_code(params[:unique_code])
@@ -77,15 +75,6 @@ class ChargesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def charge_params
-      params.require(:charge).permit(:amount, :unique_code, :paid, :refunded)
+      params.require(:charge).permit(:amount, :c_type, :c_id)
     end
-
-    # def find_chargeable
-    #   params.each do |name, value|
-    #     if name =~ /(.+)_id$/
-    #       return $1.classify.constantize.find(value)
-    #     end
-    #   end
-    #   nil
-    # end
 end
